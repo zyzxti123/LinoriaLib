@@ -27,19 +27,20 @@ local Library = {
 	['Registry'] = {};
 	['RegistryMap'] = {};
 	['HudRegistry'] = {};
-	['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['MainColor'] = Color3.fromRGB(28, 28, 28);
 	['BackgroundColor'] = Color3.fromRGB(20, 20, 20);
 	['AccentColor'] = Color3.fromRGB(0, 85, 255);
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
+    ['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
 	['Signals'] = {};
 	['ScreenGui'] = ScreenGui;
 };
+Library.__index = Library
 
 local RainbowStep = 0
 local Hue = 0
@@ -2950,7 +2951,7 @@ function Library:CreateWindow(...)
 		Config.Position = UDim2.fromScale(0.5, 0.5)
 	end
 	
-	if Config.Font then Library.Font = Config.Font end
+	--if Config.Font then Library.Font = Config.Font end
 	
 	local Window = {
 		Tabs = {};
@@ -3616,9 +3617,12 @@ function Library:CreateWindow(...)
 	return Window;
 end;
 
-if getgenv().LinoriaLibScreenGui then 
-	Library:Unload() 
-	getgenv().LinoriaLibScreenGui = ScreenGui
+if getgenv().LinoriaLib then
+    getgenv().LinoriaLib:Unload()
+    getgenv().LinoriaLib["ScreenGui"]:Destroy()
+    getgenv().LinoriaLib = setmetatable({}, Library)
 end
+
+getgenv().LinoriaLib = setmetatable({}, Library)
 
 return Library
