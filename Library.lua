@@ -1,25 +1,24 @@
-local InputService = game:GetService('UserInputService');
-local TextService = game:GetService('TextService');
-local CoreGui = game:GetService('CoreGui');
-local Teams = game:GetService('Teams');
-local Players = game:GetService('Players');
-local RunService = game:GetService('RunService')
-local TweenService = game:GetService('TweenService');
+local InputService: Instance = game:GetService('UserInputService');
+local TextService: Instance = game:GetService('TextService');
+local CoreGui: Instance = game:GetService('CoreGui');
+local Teams: Instance = game:GetService('Teams');
+local Players: Instance = game:GetService('Players');
+local RunService: Instance = game:GetService('RunService')
+local TweenService: Instance = game:GetService('TweenService');
 
-local RenderStepped = RunService.RenderStepped;
+local RenderStepped: RBXScriptSignal = RunService.RenderStepped;
 local LocalPlayer: Player = Players.LocalPlayer;
-local Mouse = LocalPlayer:GetMouse();
+local Mouse: Mouse = LocalPlayer:GetMouse();
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
-local ScreenGui = Instance.new('ScreenGui');
+local ScreenGui: ScreenGui = Instance.new('ScreenGui');
 ProtectGui(ScreenGui);
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
 
 local Toggles = {};
 local Options = {};
-
 getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
@@ -33,7 +32,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    	['FontColor'] = Color3.fromRGB(255, 255, 255);
+    ['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -2993,7 +2992,7 @@ function Library:CreateWindow(...)
 	if typeof(Config.Position) ~= 'UDim2' then Config.Position = UDim2.fromOffset(175, 50) end
 	if typeof(Config.Size) ~= 'UDim2' then Config.Size = UDim2.fromOffset(550, 600) end
 
-	if type(Config.Font) ~= "userdata" then Config.Font = Enum.FontStyle.Code end
+	if type(Config.Font) ~= "userdata" then Config.Font = Enum.Font.Code end
 
 	if Config.Center then
 		Config.AnchorPoint = Vector2.new(0.5, 0.5)
