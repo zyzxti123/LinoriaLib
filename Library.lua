@@ -1,3 +1,4 @@
+--
 local InputService: Instance = game:GetService('UserInputService');
 local TextService: Instance = game:GetService('TextService');
 local CoreGui: Instance = game:GetService('CoreGui');
@@ -1390,9 +1391,6 @@ do
 			});
 		end
 
-		Label.TextLabel = TextLabel;
-		Label.Container = Container;
-
 		function Label:SetText(Text)
 			TextLabel.Text = Text
 
@@ -1404,12 +1402,12 @@ do
 			Groupbox:Resize();
 		end
 
-		if (not DoesWrap) then
-			setmetatable(Label, BaseAddons);
-		end
-
 		Groupbox:AddBlank(5);
 		Groupbox:Resize();
+
+		Label.TextLabel = TextLabel;
+		Label.Container = Container;
+		setmetatable(Label, BaseAddons);
 
 		return Label;
 	end;
@@ -1562,7 +1560,6 @@ do
 			end
 			return self
 		end
-
 
 		function Button:AddButton(...)
 			local SubButton = {}
