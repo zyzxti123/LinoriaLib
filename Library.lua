@@ -32,7 +32,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-   	['FontColor'] = Color3.fromRGB(255, 255, 255);
+    	['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -302,7 +302,11 @@ function Library:MapValue(Value, MinA, MaxA, MinB, MaxB)
 end;
 
 function Library:GetTextBounds(Text, Font, Size, Resolution)
-	local Bounds = TextService:GetTextSize(Text, Size, Font, Resolution or Vector2.new(1920, 1080))
+	local function removeHTML()
+		return Text:gsub("<[^>]*>","")
+	end
+
+	local Bounds = TextService:GetTextSize(removeHTML(Text), Size, Font, Resolution or Vector2.new(1920, 1080))
 	return Bounds.X, Bounds.Y
 end;
 
@@ -1373,12 +1377,8 @@ do
 			RichText = true;
 		});
 
-		local function removeHTML(str)
-			return str:gsub("<[^>]*>","")
-		end
-
 		if DoesWrap then
-			local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
+			local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 			TextLabel.Size = UDim2.new(1, -4, 0, Y)
 		else
 			Library:Create('UIListLayout', {
@@ -1397,7 +1397,7 @@ do
 			TextLabel.Text = Text
 
 			if DoesWrap then
-				local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
+				local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 				TextLabel.Size = UDim2.new(1, -4, 0, Y)
 			end
 
@@ -1789,7 +1789,7 @@ do
 				if cursor ~= -1 then
 					-- calculate pixel width of text from start to cursor
 					local subtext = string.sub(Box.Text, 1, cursor-1)
-					local width = TextService:GetTextSize(subtext, Box.TextSize, Box.Font, Vector2.new(math.huge, math.huge)).X
+					local width = TextService:GetTextSize(Library:removeHTMLTags(subtext), Box.TextSize, Box.Font, Vector2.new(math.huge, math.huge)).X
 
 					-- check if we're inside the box with the cursor
 					local currentCursorPos = Box.Position.X.Offset + width
