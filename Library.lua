@@ -395,8 +395,8 @@ function Library:OnUnload(Callback)
 end
 
 Library:GiveSignal(ScreenGui.DescendantRemoving:Connect(function(Instance)
-	if self.RegistryMap[Instance] then
-		self:RemoveFromRegistry(Instance);
+	if Library.RegistryMap[Instance] then
+		Library:RemoveFromRegistry(Instance);
 	end;
 end))
 
