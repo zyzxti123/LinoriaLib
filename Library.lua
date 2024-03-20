@@ -33,7 +33,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    	['FontColor'] = Color3.fromRGB(255, 255, 255);
+    ['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -443,7 +443,7 @@ do
 			BorderSizePixel = 0;
 			Size = UDim2.new(0, 27, 0, 13);
 			ZIndex = 5;
-			Image = ''; --'http://www.roblox.com/asset/?id=12977615774';
+			Image = 'http://www.roblox.com/asset/?id=12977615774';
 			Visible = not not Info.Transparency;
 			Parent = DisplayFrame;
 		});
@@ -514,7 +514,7 @@ do
 			AnchorPoint = Vector2.new(0.5, 0.5);
 			Size = UDim2.new(0, 6, 0, 6);
 			BackgroundTransparency = 1;
-			Image = ''; --'http://www.roblox.com/asset/?id=9619665977';
+			Image = 'http://www.roblox.com/asset/?id=9619665977';
 			ImageColor3 = Color3.new(0, 0, 0);
 			ZIndex = 19;
 			Parent = SatVibMap;
@@ -524,7 +524,7 @@ do
 			Size = UDim2.new(0, CursorOuter.Size.X.Offset - 2, 0, CursorOuter.Size.Y.Offset - 2);
 			Position = UDim2.new(0, 1, 0, 1);
 			BackgroundTransparency = 1;
-			Image = ''; --'http://www.roblox.com/asset/?id=9619665977';
+			Image = 'http://www.roblox.com/asset/?id=9619665977';
 			ZIndex = 20;
 			Parent = CursorOuter;
 		})
@@ -635,7 +635,7 @@ do
 			Library:Create('ImageLabel', {
 				BackgroundTransparency = 1;
 				Size = UDim2.new(1, 0, 1, 0);
-				Image = ''; --'http://www.roblox.com/asset/?id=12978095818';
+				Image = 'http://www.roblox.com/asset/?id=12978095818';
 				ZIndex = 20;
 				Parent = TransparencyBoxInner;
 			});
@@ -2263,7 +2263,7 @@ do
 			BackgroundTransparency = 1;
 			Position = UDim2.new(1, -16, 0.5, 0);
 			Size = UDim2.new(0, 12, 0, 12);
-			Image = ''; --'http://www.roblox.com/asset/?id=6282522798';
+			Image = 'http://www.roblox.com/asset/?id=6282522798';
 			ZIndex = 8;
 			Parent = DropdownInner;
 		});
@@ -3550,41 +3550,41 @@ function Library:CreateWindow(...)
 
 			task.spawn(function()
 				-- TODO: add cursor fade?
-				local State = InputService.MouseIconEnabled;
+				--local State = InputService.MouseIconEnabled;
 
-				local Cursor = Drawing.new('Triangle');
-				Cursor.Thickness = 1;
-				Cursor.Filled = true;
-				Cursor.Visible = true;
+				--local Cursor = Drawing.new('Triangle');
+				--Cursor.Thickness = 1;
+				--Cursor.Filled = true;
+				--Cursor.Visible = true;
 
-				local CursorOutline = Drawing.new('Triangle');
-				CursorOutline.Thickness = 1;
-				CursorOutline.Filled = false;
-				CursorOutline.Color = Color3.new(0, 0, 0);
-				CursorOutline.Visible = true;
+				--local CursorOutline = Drawing.new('Triangle');
+				--CursorOutline.Thickness = 1;
+				--CursorOutline.Filled = false;
+				--CursorOutline.Color = Color3.new(0, 0, 0);
+				--CursorOutline.Visible = true;
 
-				while Toggled and ScreenGui.Parent do
-					InputService.MouseIconEnabled = false;
+				--while Toggled and ScreenGui.Parent do
+				--	InputService.MouseIconEnabled = false;
 
-					local mPos = InputService:GetMouseLocation();
+				--	local mPos = InputService:GetMouseLocation();
 
-					Cursor.Color = Library.AccentColor;
+				--	Cursor.Color = Library.AccentColor;
 
-					Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
-					Cursor.PointB = Vector2.new(mPos.X + 16, mPos.Y + 6);
-					Cursor.PointC = Vector2.new(mPos.X + 6, mPos.Y + 16);
+				--	Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
+				--	Cursor.PointB = Vector2.new(mPos.X + 16, mPos.Y + 6);
+				--	Cursor.PointC = Vector2.new(mPos.X + 6, mPos.Y + 16);
 
-					CursorOutline.PointA = Cursor.PointA;
-					CursorOutline.PointB = Cursor.PointB;
-					CursorOutline.PointC = Cursor.PointC;
+				--	CursorOutline.PointA = Cursor.PointA;
+				--	CursorOutline.PointB = Cursor.PointB;
+				--	CursorOutline.PointC = Cursor.PointC;
 
-					RenderStepped:Wait();
-				end;
+				--	RenderStepped:Wait();
+				--end;
 
-				InputService.MouseIconEnabled = State;
+				--InputService.MouseIconEnabled = State;
 
-				Cursor:Remove();
-				CursorOutline:Remove();
+				--Cursor:Remove();
+				--CursorOutline:Remove();
 			end);
 		end;
 
