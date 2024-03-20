@@ -33,7 +33,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    	['FontColor'] = Color3.fromRGB(255, 255, 255);
+    ['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -146,6 +146,7 @@ function Library:CreateLabel(Properties, IsHud)
 		TextColor3 = Library.FontColor;
 		TextSize = 16;
 		TextStrokeTransparency = 0;
+		RichText = true;
 	});
 
 	Library:ApplyTextStroke(_Instance);
@@ -206,8 +207,8 @@ function Library:AddToolTip(InfoStr, HoverInstance)
 		TextColor3 = Library.FontColor,
 		TextXAlignment = Enum.TextXAlignment.Left;
 		ZIndex = Tooltip.ZIndex + 1,
-
 		Parent = Tooltip;
+		RichText = true;
 	});
 
 	Library:AddToRegistry(Tooltip, {
@@ -659,6 +660,7 @@ do
 			TextWrapped = false;
 			ZIndex = 16;
 			Parent = PickerFrameInner;
+			RichText = true;
 		});
 
 
@@ -748,6 +750,7 @@ do
 					ZIndex = 16;
 					Parent = self.Inner;
 					TextXAlignment = Enum.TextXAlignment.Left,
+					RichText = true;
 				});
 
 				Library:OnHighlight(Button, Button, 
@@ -1049,6 +1052,7 @@ do
 			TextWrapped = true;
 			ZIndex = 8;
 			Parent = PickInner;
+			RichText = true;
 		});
 
 		local ModeSelectOuter = Library:Create('Frame', {
@@ -1091,6 +1095,7 @@ do
 			Visible = false;
 			ZIndex = 110;
 			Parent = Library.KeybindContainer;
+			RichText = true;
 		},  true);
 
 		local Modes = Info.Modes or { 'Always', 'Toggle', 'Hold' };
@@ -1108,6 +1113,7 @@ do
 				Text = Mode;
 				ZIndex = 16;
 				Parent = ModeSelectInner;
+				RichText = true;
 			});
 
 			function ModeButton:Select()
@@ -1364,6 +1370,7 @@ do
 			TextXAlignment = Enum.TextXAlignment.Left;
 			ZIndex = 5;
 			Parent = Container;
+			RichText = true;
 		});
 
 		if DoesWrap then
@@ -1449,6 +1456,7 @@ do
 				Text = Button.Text;
 				ZIndex = 6;
 				Parent = Inner;
+				RichText = true;
 			});
 
 			Library:Create('UIGradient', {
@@ -1649,6 +1657,7 @@ do
 			TextXAlignment = Enum.TextXAlignment.Left;
 			ZIndex = 5;
 			Parent = Container;
+			RichText = true;
 		});
 
 		Groupbox:AddBlank(1);
@@ -1862,6 +1871,7 @@ do
 			TextXAlignment = Enum.TextXAlignment.Left;
 			ZIndex = 6;
 			Parent = ToggleInner;
+			RichText = true;
 		});
 
 		Library:Create('UIListLayout', {
@@ -1980,6 +1990,7 @@ do
 				TextYAlignment = Enum.TextYAlignment.Bottom;
 				ZIndex = 5;
 				Parent = Container;
+				RichText = true;
 			});
 
 			Groupbox:AddBlank(3);
@@ -2043,6 +2054,7 @@ do
 			Text = 'Infinite';
 			ZIndex = 9;
 			Parent = SliderInner;
+			RichText = true;
 		});
 
 		Library:OnHighlight(SliderOuter, SliderOuter,
@@ -2212,6 +2224,7 @@ do
 				TextYAlignment = Enum.TextYAlignment.Bottom;
 				ZIndex = 5;
 				Parent = Container;
+				RichText = true;
 			});
 
 			Groupbox:AddBlank(3);
@@ -2277,6 +2290,7 @@ do
 			TextWrapped = true;
 			ZIndex = 7;
 			Parent = DropdownInner;
+			RichText = true;
 		});
 
 		Library:OnHighlight(DropdownOuter, DropdownOuter,
@@ -2426,6 +2440,7 @@ do
 					TextXAlignment = Enum.TextXAlignment.Left;
 					ZIndex = 25;
 					Parent = Button;
+					RichText = true;
 				});
 
 				Library:OnHighlight(Button, Button,
@@ -2776,6 +2791,7 @@ do
 		TextXAlignment = Enum.TextXAlignment.Left;
 		ZIndex = 203;
 		Parent = InnerFrame;
+		RichText = true;
 	});
 
 	Library.Watermark = WatermarkOuter;
@@ -2828,6 +2844,7 @@ do
 		Text = 'Keybinds';
 		ZIndex = 104;
 		Parent = KeybindInner;
+		RichText = true;
 	});
 
 	local KeybindContainer = Library:Create('Frame', {
@@ -2929,6 +2946,7 @@ function Library:Notify(Text, Time)
 		TextSize = 14;
 		ZIndex = 103;
 		Parent = InnerFrame;
+		RichText = true;
 	});
 
 	local LeftColor = Library:Create('Frame', {
@@ -3021,6 +3039,7 @@ function Library:CreateWindow(...)
 		TextXAlignment = Enum.TextXAlignment.Left;
 		ZIndex = 1;
 		Parent = Inner;
+		RichText = true;
 	});
 
 	local MainSectionOuter = Library:Create('Frame', {
@@ -3112,6 +3131,7 @@ function Library:CreateWindow(...)
 			Text = Name;
 			ZIndex = 1;
 			Parent = TabButton;
+			RichText = true;
 		});
 
 		local Blocker = Library:Create('Frame', {
@@ -3260,6 +3280,7 @@ function Library:CreateWindow(...)
 				TextXAlignment = Enum.TextXAlignment.Left;
 				ZIndex = 5;
 				Parent = BoxInner;
+				RichText = true;
 			});
 
 			local Container = Library:Create('Frame', {
@@ -3389,6 +3410,7 @@ function Library:CreateWindow(...)
 					TextXAlignment = Enum.TextXAlignment.Center;
 					ZIndex = 7;
 					Parent = Button;
+					RichText = true;
 				});
 
 				local Block = Library:Create('Frame', {
