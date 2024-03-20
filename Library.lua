@@ -391,7 +391,7 @@ function Library:Unload()
 end
 
 function Library:OnUnload(Callback)
-	self.OnUnload = Callback
+	Library.OnUnload = Callback
 end
 
 Library:GiveSignal(ScreenGui.DescendantRemoving:Connect(function(Instance)
