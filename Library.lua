@@ -91,7 +91,7 @@ function Library:SafeCallback(f, ...)
 		return;
 	end;
 
-	if not Library.NotifyOnError then
+	if not self.NotifyOnError then
 		return f(...);
 	end;
 
@@ -109,8 +109,8 @@ function Library:SafeCallback(f, ...)
 end;
 
 function Library:AttemptSave()
-	if Library.SaveManager then
-		Library.SaveManager:Save();
+	if self.SaveManager then
+		self.SaveManager:Save();
 	end;
 end;
 
@@ -131,7 +131,7 @@ end;
 function Library:ApplyTextStroke(Inst)
 	Inst.TextStrokeTransparency = 1;
 
-	Library:Create('UIStroke', {
+	self:Create('UIStroke', {
 		Color = Color3.new(0, 0, 0);
 		Thickness = 1;
 		LineJoinMode = Enum.LineJoinMode.Miter;
@@ -140,21 +140,21 @@ function Library:ApplyTextStroke(Inst)
 end;
 
 function Library:CreateLabel(Properties, IsHud)
-	local _Instance = Library:Create('TextLabel', {
+	local _Instance = self:Create('TextLabel', {
 		BackgroundTransparency = 1;
-		Font = Library.Font;
-		TextColor3 = Library.FontColor;
+		Font = self.Font;
+		TextColor3 = self.FontColor;
 		TextSize = 16;
 		TextStrokeTransparency = 0;
 	});
 
-	Library:ApplyTextStroke(_Instance);
+	self:ApplyTextStroke(_Instance);
 
-	Library:AddToRegistry(_Instance, {
+	self:AddToRegistry(_Instance, {
 		TextColor3 = 'FontColor';
 	}, IsHud);
 
-	return Library:Create(_Instance, Properties);
+	return self:Create(_Instance, Properties);
 end;
 
 function Library:MakeDraggable(Instance, Cutoff)
@@ -186,43 +186,43 @@ function Library:MakeDraggable(Instance, Cutoff)
 end;
 
 function Library:AddToolTip(InfoStr, HoverInstance)
-	local X, Y = Library:GetTextBounds(InfoStr, Library.Font, 14);
-	local Tooltip = Library:Create('Frame', {
-		BackgroundColor3 = Library.MainColor,
-		BorderColor3 = Library.OutlineColor,
+	local X, Y = self:GetTextBounds(InfoStr, self.Font, 14);
+	local Tooltip = self:Create('Frame', {
+		BackgroundColor3 = self.MainColor,
+		BorderColor3 = self.OutlineColor,
 
 		Size = UDim2.fromOffset(X + 5, Y + 4),
 		ZIndex = 100,
-		Parent = Library.ScreenGui,
+		Parent = self.ScreenGui,
 
 		Visible = false,
 	})
 
-	local Label = Library:CreateLabel({
+	local Label = self:CreateLabel({
 		Position = UDim2.fromOffset(3, 1),
 		Size = UDim2.fromOffset(X, Y);
 		TextSize = 14;
 		Text = InfoStr,
-		TextColor3 = Library.FontColor,
+		TextColor3 = self.FontColor,
 		TextXAlignment = Enum.TextXAlignment.Left;
 		ZIndex = Tooltip.ZIndex + 1,
 
 		Parent = Tooltip;
 	});
 
-	Library:AddToRegistry(Tooltip, {
+	self:AddToRegistry(Tooltip, {
 		BackgroundColor3 = 'MainColor';
 		BorderColor3 = 'OutlineColor';
 	});
 
-	Library:AddToRegistry(Label, {
+	self:AddToRegistry(Label, {
 		TextColor3 = 'FontColor',
 	});
 
 	local IsHovering = false
 
 	HoverInstance.MouseEnter:Connect(function()
-		if Library:MouseIsOverOpenedFrame() then
+		if self:MouseIsOverOpenedFrame() then
 			return
 		end
 
@@ -245,7 +245,7 @@ end
 
 function Library:OnHighlight(HighlightInstance, Instance, Properties, PropertiesDefault)
 	HighlightInstance.MouseEnter:Connect(function()
-		local Reg = Library.RegistryMap[Instance];
+		local Reg = self.RegistryMap[Instance];
 
 		for Property, ColorIdx in next, Properties do
 			Instance[Property] = Library[ColorIdx] or ColorIdx;
@@ -257,7 +257,7 @@ function Library:OnHighlight(HighlightInstance, Instance, Properties, Properties
 	end)
 
 	HighlightInstance.MouseLeave:Connect(function()
-		local Reg = Library.RegistryMap[Instance];
+		local Reg = self.RegistryMap[Instance];
 
 		for Property, ColorIdx in next, PropertiesDefault do
 			Instance[Property] = Library[ColorIdx] or ColorIdx;
@@ -270,7 +270,7 @@ function Library:OnHighlight(HighlightInstance, Instance, Properties, Properties
 end;
 
 function Library:MouseIsOverOpenedFrame()
-	for Frame, _ in next, Library.OpenedFrames do
+	for Frame, _ in next, self.OpenedFrames do
 		local AbsPos, AbsSize = Frame.AbsolutePosition, Frame.AbsoluteSize;
 
 		if Mouse.X >= AbsPos.X and Mouse.X <= AbsPos.X + AbsSize.X
@@ -292,7 +292,7 @@ function Library:IsMouseOverFrame(Frame)
 end;
 
 function Library:UpdateDependencyBoxes()
-	for _, Depbox in next, Library.DependencyBoxes do
+	for _, Depbox in next, self.DependencyBoxes do
 		Depbox:Update();
 	end;
 end;
@@ -313,38 +313,38 @@ end;
 Library.AccentColorDark = Library:GetDarkerColor(Library.AccentColor);
 
 function Library:AddToRegistry(Instance, Properties, IsHud)
-	local Idx = #Library.Registry + 1;
+	local Idx = #self.Registry + 1;
 	local Data = {
 		Instance = Instance;
 		Properties = Properties;
 		Idx = Idx;
 	};
 
-	table.insert(Library.Registry, Data);
-	Library.RegistryMap[Instance] = Data;
+	table.insert(self.Registry, Data);
+	self.RegistryMap[Instance] = Data;
 
 	if IsHud then
-		table.insert(Library.HudRegistry, Data);
+		table.insert(self.HudRegistry, Data);
 	end;
 end;
 
 function Library:RemoveFromRegistry(Instance)
-	local Data = Library.RegistryMap[Instance];
+	local Data = self.RegistryMap[Instance];
 
 	if Data then
-		for Idx = #Library.Registry, 1, -1 do
-			if Library.Registry[Idx] == Data then
-				table.remove(Library.Registry, Idx);
+		for Idx = #self.Registry, 1, -1 do
+			if self.Registry[Idx] == Data then
+				table.remove(self.Registry, Idx);
 			end;
 		end;
 
-		for Idx = #Library.HudRegistry, 1, -1 do
-			if Library.HudRegistry[Idx] == Data then
-				table.remove(Library.HudRegistry, Idx);
+		for Idx = #self.HudRegistry, 1, -1 do
+			if self.HudRegistry[Idx] == Data then
+				table.remove(self.HudRegistry, Idx);
 			end;
 		end;
 
-		Library.RegistryMap[Instance] = nil;
+		self.RegistryMap[Instance] = nil;
 	end;
 end;
 
@@ -359,7 +359,7 @@ function Library:UpdateColorsUsingRegistry()
 
 	-- The above would be especially efficient for a rainbow menu color or live color-changing.
 
-	for Idx, Object in next, Library.Registry do
+	for Idx, Object in next, self.Registry do
 		for Property, ColorIdx in next, Object.Properties do
 			if type(ColorIdx) == 'string' then
 				Object.Instance[Property] = Library[ColorIdx];
@@ -372,31 +372,31 @@ end;
 
 function Library:GiveSignal(Signal)
 	-- Only used for signals not attached to library instances, as those should be cleaned up on object destruction by Roblox
-	table.insert(Library.Signals, Signal)
+	table.insert(self.Signals, Signal)
 end
 
 function Library:Unload()
 	-- Unload all of the signals
-	for Idx = #Library.Signals, 1, -1 do
-		local Connection = table.remove(Library.Signals, Idx)
+	for Idx = #self.Signals, 1, -1 do
+		local Connection = table.remove(self.Signals, Idx)
 		Connection:Disconnect()
 	end
 
 	-- Call our unload callback, maybe to undo some hooks etc
-	if Library.OnUnload then
-		Library.OnUnload()
+	if self.OnUnload then
+		self.OnUnload()
 	end
 
 	ScreenGui:Destroy()
 end
 
 function Library:OnUnload(Callback)
-	Library.OnUnload = Callback
+	self.OnUnload = Callback
 end
 
 Library:GiveSignal(ScreenGui.DescendantRemoving:Connect(function(Instance)
-	if Library.RegistryMap[Instance] then
-		Library:RemoveFromRegistry(Instance);
+	if self.RegistryMap[Instance] then
+		self:RemoveFromRegistry(Instance);
 	end;
 end))
 
@@ -1013,6 +1013,7 @@ do
 
 			SyncToggleState = Info.SyncToggleState or false;
 		};
+		KeyPicker.__index = KeyPicker
 
 		if KeyPicker.SyncToggleState then
 			Info.Modes = { 'Toggle' }
@@ -1093,10 +1094,12 @@ do
 		},  true);
 
 		local Modes = Info.Modes or { 'Always', 'Toggle', 'Hold' };
+		
 		local ModeButtons = {};
 
 		for Idx, Mode in next, Modes do
 			local ModeButton = {};
+			ModeButton.__index = ModeButton
 
 			local Label = Library:CreateLabel({
 				Active = false;
@@ -1146,9 +1149,9 @@ do
 				return;
 			end;
 
-			local State = KeyPicker:GetState();
+			local State = self:GetState();
 
-			ContainerLabel.Text = string.format('[%s] %s (%s)', KeyPicker.Value, Info.Text, KeyPicker.Mode);
+			ContainerLabel.Text = string.format('[%s] %s (%s)', self.Value, Info.Text, self.Mode);
 
 			ContainerLabel.Visible = true;
 			ContainerLabel.TextColor3 = State and Library.AccentColor or Library.FontColor;
@@ -1171,41 +1174,41 @@ do
 		end;
 
 		function KeyPicker:GetState()
-			if KeyPicker.Mode == 'Always' then
+			if self.Mode == 'Always' then
 				return true;
-			elseif KeyPicker.Mode == 'Hold' then
-				if KeyPicker.Value == 'None' then
+			elseif self.Mode == 'Hold' then
+				if self.Value == 'None' then
 					return false;
 				end
 
-				local Key = KeyPicker.Value;
+				local Key = self.Value;
 
 				if Key == 'MB1' or Key == 'MB2' then
 					return Key == 'MB1' and InputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
 						or Key == 'MB2' and InputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2);
 				else
-					return InputService:IsKeyDown(Enum.KeyCode[KeyPicker.Value]);
+					return InputService:IsKeyDown(Enum.KeyCode[self.Value]);
 				end;
 			else
-				return KeyPicker.Toggled;
+				return self.Toggled;
 			end;
 		end;
 
 		function KeyPicker:SetValue(Data)
 			local Key, Mode = Data[1], Data[2];
 			DisplayLabel.Text = Key;
-			KeyPicker.Value = Key;
+			self.Value = Key;
 			ModeButtons[Mode]:Select();
-			KeyPicker:Update();
+			self:Update();
 		end;
 
 		function KeyPicker:OnClick(Callback)
-			KeyPicker.Clicked = Callback
+			self.Clicked = Callback
 		end
 
 		function KeyPicker:OnChanged(Callback)
-			KeyPicker.Changed = Callback
-			Callback(KeyPicker.Value)
+			self.Changed = Callback
+			Callback(self.Value)
 		end
 
 		if ParentObj.Addons then
@@ -1213,12 +1216,12 @@ do
 		end
 
 		function KeyPicker:DoClick()
-			if ParentObj.Type == 'Toggle' and KeyPicker.SyncToggleState then
+			if ParentObj.Type == 'Toggle' and self.SyncToggleState then
 				ParentObj:SetValue(not ParentObj.Value)
 			end
 
-			Library:SafeCallback(KeyPicker.Callback, KeyPicker.Toggled)
-			Library:SafeCallback(KeyPicker.Clicked, KeyPicker.Toggled)
+			Library:SafeCallback(self.Callback, self.Toggled)
+			Library:SafeCallback(self.Clicked, self.Toggled)
 		end
 
 		local Picking = false;
@@ -1333,6 +1336,7 @@ local BaseGroupbox = {};
 
 do
 	local Funcs = {};
+	Funcs.__index = Funcs
 
 	function Funcs:AddBlank(Size)
 		local Groupbox = self;
@@ -2105,6 +2109,32 @@ do
 
 			Library:SafeCallback(Slider.Callback, Slider.Value);
 			Library:SafeCallback(Slider.Changed, Slider.Value);
+		end;
+
+		function Slider:SetMinValue(Str)
+			local Num = tonumber(Str);
+
+			if (not Num) then
+				return;
+			end;
+
+			Num = math.clamp(Num, Str, Slider.Max);
+
+			Slider.Min = Num;
+			Slider:Display();
+		end;
+
+		function Slider:SetMaxValue(Str)
+			local Num = tonumber(Str);
+
+			if (not Num) then
+				return;
+			end;
+
+			Num = math.clamp(Num, Slider.Min, Str);
+
+			Slider.Max = Num;
+			Slider:Display();
 		end;
 
 		SliderInner.InputBegan:Connect(function(Input)
