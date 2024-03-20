@@ -1362,6 +1362,7 @@ do
 
 	function Funcs:AddLabel(Text, DoesWrap)
 		local Label = {};
+		Label.__index = Label
 
 		local Groupbox = self;
 		local Container = Groupbox.Container;
@@ -1394,11 +1395,11 @@ do
 		Label.Container = Container;
 
 		function Label:SetText(Text)
-			TextLabel.Text = Text
+			Label.TextLabel.Text = Text
 
 			if DoesWrap then
 				local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
-				TextLabel.Size = UDim2.new(1, -4, 0, Y)
+				Label.TextLabel.Size = UDim2.new(1, -4, 0, Y)
 			end
 
 			Groupbox:Resize();
