@@ -32,7 +32,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    	['FontColor'] = Color3.fromRGB(255, 255, 255);
+   	['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -594,6 +594,7 @@ do
 			TextXAlignment = Enum.TextXAlignment.Left;
 			ZIndex = 20,
 			Parent = HueBoxInner;
+			RichText = true
 		});
 
 		Library:ApplyTextStroke(HueBox);
@@ -1374,7 +1375,7 @@ do
 
 		local function removeHTML(str)
 			return str:gsub("<[^>]*>","")
-		end	
+		end
 
 		if DoesWrap then
 			local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
@@ -1734,6 +1735,8 @@ do
 
 			ZIndex = 7;
 			Parent = Container;
+
+			RichText = true
 		});
 
 		Library:ApplyTextStroke(Box);
@@ -3554,6 +3557,7 @@ function Library:CreateWindow(...)
 		Text = '';
 		Modal = false;
 		Parent = ScreenGui;
+		RichText = true;
 	});
 
 	local TransparencyCache = {};
