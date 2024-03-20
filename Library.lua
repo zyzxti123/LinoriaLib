@@ -32,7 +32,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    ['FontColor'] = Color3.fromRGB(255, 255, 255);
+    	['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -145,7 +145,6 @@ function Library:CreateLabel(Properties, IsHud)
 		TextColor3 = Library.FontColor;
 		TextSize = 16;
 		TextStrokeTransparency = 0;
-		RichText = true;
 	});
 
 	Library:ApplyTextStroke(_Instance);
@@ -303,7 +302,7 @@ end;
 
 function Library:GetTextBounds(Text, Font, Size, Resolution)
 	local function removeHTML()
-		return Text:gsub("<[^>]*>","")
+		return Text:gsub("<[^>]*>", "")
 	end
 
 	local Bounds = TextService:GetTextSize(removeHTML(Text), Size, Font, Resolution or Vector2.new(1920, 1080))
@@ -1391,6 +1390,9 @@ do
 			});
 		end
 
+		Label.TextLabel = TextLabel;
+		Label.Container = Container;
+
 		function Label:SetText(Text)
 			TextLabel.Text = Text
 
@@ -1405,9 +1407,6 @@ do
 		if (not DoesWrap) then
 			setmetatable(Label, BaseAddons);
 		end
-
-		Label.TextLabel = TextLabel;
-		Label.Container = Container;
 
 		Groupbox:AddBlank(5);
 		Groupbox:Resize();
@@ -2297,7 +2296,7 @@ do
 			TextWrapped = true;
 			ZIndex = 7;
 			Parent = DropdownInner;
-			RichText = true;
+			RichText = false;
 		});
 
 		Library:OnHighlight(DropdownOuter, DropdownOuter,
@@ -2447,7 +2446,7 @@ do
 					TextXAlignment = Enum.TextXAlignment.Left;
 					ZIndex = 25;
 					Parent = Button;
-					RichText = true;
+					RichText = false;
 				});
 
 				Library:OnHighlight(Button, Button,
