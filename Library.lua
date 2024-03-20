@@ -1374,8 +1374,10 @@ do
 
 		if DoesWrap then
 			local function removeHTML(str)
-				return str:gsub("<[^>]+>", "")
+				return str:gsub("<[^>]*>","")
 			end	
+
+			warn(removeHTML(Text))
 
 			local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 			TextLabel.Size = UDim2.new(1, -4, 0, Y)
