@@ -32,7 +32,7 @@ local Library = {
 	['OutlineColor'] = Color3.fromRGB(50, 50, 50);
 	['RiskColor'] = Color3.fromRGB(255, 50, 50),
 	['Black'] = Color3.new(0, 0, 0);
-    	['FontColor'] = Color3.fromRGB(255, 255, 255);
+    ['FontColor'] = Color3.fromRGB(255, 255, 255);
 	['Font'] = Enum.Font.Code,
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
@@ -1376,8 +1376,6 @@ do
 			local function removeHTML(str)
 				return str:gsub("<[^>]*>","")
 			end	
-
-			warn(removeHTML(Text))
 
 			local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 			TextLabel.Size = UDim2.new(1, -4, 0, Y)
