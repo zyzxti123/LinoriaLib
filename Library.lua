@@ -1372,11 +1372,11 @@ do
 			RichText = true;
 		});
 
-		if DoesWrap then
-			local function removeHTML(str)
-				return str:gsub("<[^>]*>","")
-			end	
+		local function removeHTML(str)
+			return str:gsub("<[^>]*>","")
+		end	
 
+		if DoesWrap then
 			local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 			TextLabel.Size = UDim2.new(1, -4, 0, Y)
 		else
@@ -1396,7 +1396,7 @@ do
 			TextLabel.Text = Text
 
 			if DoesWrap then
-				local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
+				local Y = select(2, Library:GetTextBounds(removeHTML(Text), Library.Font, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
 				TextLabel.Size = UDim2.new(1, -4, 0, Y)
 			end
 
