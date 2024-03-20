@@ -406,8 +406,8 @@ do
 	local Funcs = {};
 
 	function Funcs:AddColorPicker(Idx, Info)
-		local ToggleLabel = Library.TextLabel;
-		-- local Container = Library.Container;
+		local ToggleLabel = self.TextLabel;
+		-- local Container = self.Container;
 
 		assert(Info.Default, 'AddColorPicker: Missing default value.');
 
@@ -728,11 +728,11 @@ do
 			});
 
 			function ContextMenu:Show()
-				ContextMenu.Container.Visible = true
+				self.Container.Visible = true
 			end
 
 			function ContextMenu:Hide()
-				ContextMenu.Container.Visible = false
+				self.Container.Visible = false
 			end
 
 			function ContextMenu:AddOption(Str, Callback)
@@ -746,7 +746,7 @@ do
 					TextSize = 13;
 					Text = Str;
 					ZIndex = 16;
-					Parent = Library.Inner;
+					Parent = self.Inner;
 					TextXAlignment = Enum.TextXAlignment.Left,
 				});
 
@@ -1557,8 +1557,7 @@ do
 
 			ProcessButtonParams('SubButton', SubButton, ...)
 
-			SubButton.Outer.Size = UDim2.new(0.5, -2, 0, 20)
-
+			self.Outer.Size = UDim2.new(0.5, -2, 0, 20)
 			SubButton.Outer, SubButton.Inner, SubButton.Label = CreateBaseButton(SubButton)
 
 			SubButton.Outer.Position = UDim2.new(1, 3, 0, 0)
