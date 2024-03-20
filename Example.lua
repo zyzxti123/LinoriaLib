@@ -16,7 +16,8 @@ local Window = Library:CreateWindow({
     Center = true,
     AutoShow = true,
     TabPadding = 8,
-    MenuFadeTime = 0.2
+    MenuFadeTime = 0.2,
+    Font = Enum.Font.Code
 })
 
 -- CALLBACK NOTE:
