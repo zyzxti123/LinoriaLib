@@ -178,6 +178,12 @@ end)
 -- This should print to the console: "MySlider was changed! New value: 3"
 Options.MySlider:SetValue(3)
 
+-- Setting the new minimum value to 1
+Options.MySlider:SetMinValue(1)
+
+-- Setting the new maximum value to 1
+Options.MySlider:SetMaxValue(6)
+
 -- Groupbox:AddInput
 -- Arguments: Idx, Info
 LeftGroupBox:AddInput('MyTextbox', {
