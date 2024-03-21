@@ -1,4 +1,6 @@
---
+if getgenv().LinoriaLib then getgenv().LinoriaLib:Unload() end
+if not game:IsLoaded() then game.Loaded:Wait() end
+
 local InputService: Instance = game:GetService('UserInputService');
 local TextService: Instance = game:GetService('TextService');
 local CoreGui: Instance = game:GetService('CoreGui');
@@ -12,16 +14,10 @@ local LocalPlayer: Player = Players.LocalPlayer;
 local Mouse: Mouse = LocalPlayer:GetMouse();
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
-
 local ScreenGui: ScreenGui = Instance.new('ScreenGui');
-ProtectGui(ScreenGui);
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
+if syn then syn.protect_gui(ScreenGui) end 
+if protectgui then protectgui(ScreenGui) end
 ScreenGui.Parent = CoreGui;
-
-local Toggles = {};
-local Options = {};
-getgenv().Toggles = Toggles;
-getgenv().Options = Options;
 
 local Library = {
 	['Registry'] = {};
@@ -39,6 +35,8 @@ local Library = {
 	['DependencyBoxes'] = {};
 	['Signals'] = {};
 	['ScreenGui'] = ScreenGui;
+	['Toggles'] = getgenv().Toggles or {},
+	['Options'] = getgenv().Options or {}
 };
 Library.__index = Library
 
@@ -998,7 +996,7 @@ do
 		ColorPicker:Display();
 		ColorPicker.DisplayFrame = DisplayFrame
 
-		Options[Idx] = ColorPicker;
+		Library.Options[Idx] = ColorPicker;
 
 		return self;
 	end;
@@ -1331,7 +1329,7 @@ do
 
 		KeyPicker:Update();
 
-		Options[Idx] = KeyPicker;
+		Library.Options[Idx] = KeyPicker;
 
 		return self;
 	end;
@@ -1820,7 +1818,7 @@ do
 		Groupbox:AddBlank(5);
 		Groupbox:Resize();
 
-		Options[Idx] = Textbox;
+		Library.Options[Idx] = Textbox;
 
 		return Textbox;
 	end;
@@ -2183,7 +2181,7 @@ do
 		Groupbox:AddBlank(Info.BlankSize or 6);
 		Groupbox:Resize();
 
-		Options[Idx] = Slider;
+		Library.Options[Idx] = Slider;
 
 		return Slider;
 	end;
@@ -2633,7 +2631,7 @@ do
 		Groupbox:AddBlank(Info.BlankSize or 5);
 		Groupbox:Resize();
 
-		Options[Idx] = Dropdown;
+		Library.Options[Idx] = Dropdown;
 
 		return Dropdown;
 	end;
@@ -3675,7 +3673,6 @@ function Library:CreateWindow(...)
 	return Window;
 end;
 
-if getgenv().LinoriaLib then getgenv().LinoriaLib:Unload() end
 getgenv().LinoriaLib = setmetatable({}, Library)
 
 return Library
