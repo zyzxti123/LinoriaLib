@@ -1958,7 +1958,7 @@ do
 		Toggle.Container = Container;
 		setmetatable(Toggle, BaseAddons);
 
-		Toggles[Idx] = Toggle;
+		Library.Toggles[Idx] = Toggle;
 
 		Library:UpdateDependencyBoxes();
 
