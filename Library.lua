@@ -13,11 +13,15 @@ local RenderStepped: RBXScriptSignal = RunService.RenderStepped;
 local LocalPlayer: Player = Players.LocalPlayer;
 local Mouse: Mouse = LocalPlayer:GetMouse();
 
-local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 local ScreenGui: ScreenGui = Instance.new('ScreenGui');
 if syn then syn.protect_gui(ScreenGui) end 
 if protectgui then protectgui(ScreenGui) end
 ScreenGui.Parent = CoreGui;
+
+local Toggles = {};
+local Options = {};
+getgenv().Toggles = Toggles;
+getgenv().Options = Options;
 
 local Library = {
 	['Registry'] = {};
@@ -35,8 +39,6 @@ local Library = {
 	['DependencyBoxes'] = {};
 	['Signals'] = {};
 	['ScreenGui'] = ScreenGui;
-	['Toggles'] = getgenv()["Toggles"] or {},
-	['Options'] = getgenv()["Options"] or {}
 };
 Library.__index = Library
 
@@ -996,7 +998,7 @@ do
 		ColorPicker:Display();
 		ColorPicker.DisplayFrame = DisplayFrame
 
-		Library.Options[Idx] = ColorPicker;
+		Options[Idx] = ColorPicker;
 
 		return self;
 	end;
@@ -1329,7 +1331,7 @@ do
 
 		KeyPicker:Update();
 
-		Library.Options[Idx] = KeyPicker;
+		Options[Idx] = KeyPicker;
 
 		return self;
 	end;
@@ -1818,7 +1820,7 @@ do
 		Groupbox:AddBlank(5);
 		Groupbox:Resize();
 
-		Library.Options[Idx] = Textbox;
+		Options[Idx] = Textbox;
 
 		return Textbox;
 	end;
@@ -1955,7 +1957,7 @@ do
 		Toggle.Container = Container;
 		setmetatable(Toggle, BaseAddons);
 
-		Library.Toggles[Idx] = Toggle;
+		Toggles[Idx] = Toggle;
 
 		Library:UpdateDependencyBoxes();
 
@@ -2181,7 +2183,7 @@ do
 		Groupbox:AddBlank(Info.BlankSize or 6);
 		Groupbox:Resize();
 
-		Library.Options[Idx] = Slider;
+		Options[Idx] = Slider;
 
 		return Slider;
 	end;
@@ -2631,7 +2633,7 @@ do
 		Groupbox:AddBlank(Info.BlankSize or 5);
 		Groupbox:Resize();
 
-		Library.Options[Idx] = Dropdown;
+		Options[Idx] = Dropdown;
 
 		return Dropdown;
 	end;
