@@ -19,6 +19,9 @@ if syn then syn.protect_gui(ScreenGui) end
 if protectgui then protectgui(ScreenGui) end
 ScreenGui.Parent = CoreGui;
 
+getgenv().Toggles = getgenv().Toggles or {}
+getgenv().Options = getgenv().Options or {}
+
 local Library = {
 	['Registry'] = {};
 	['RegistryMap'] = {};
