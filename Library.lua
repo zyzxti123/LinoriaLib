@@ -33,15 +33,15 @@ local Library = {
 	['OpenedFrames'] = {};
 	['DependencyBoxes'] = {};
 	['ScreenGui'] = ScreenGui;
-	['Signals'] = getgenv['Signals'] and getgenv['Signals'] or {};
-	['Toggles'] = getgenv['Toggles'] and getgenv['Toggles'] or {};
-	['Options'] = getgenv['Options'] and getgenv['Options'] or {}
+	['Signals'] = getgenv()['Signals'] and getgenv()['Signals'] or {};
+	['Toggles'] = getgenv()['Toggles'] and getgenv()['Toggles'] or {};
+	['Options'] = getgenv()['Options'] and getgenv()['Options'] or {}
 };
 Library.__index = Library
 
-getgenv['Signals'] = getgenv['Signals'] and getgenv['Signals'] or Library.Signals;
-getgenv['Toggles'] = getgenv['Toggles'] and getgenv['Toggles'] or Library.Toggles;;
-getgenv['Options'] = getgenv['Options'] and getgenv['Options'] or Library.Options;
+getgenv()['Signals'] = getgenv()['Signals'] and getgenv()['Signals'] or Library.Signals;
+getgenv()['Toggles'] = getgenv()['Toggles'] and getgenv()['Toggles'] or Library.Toggles;
+getgenv()['Options'] = getgenv()['Options'] and getgenv()['Options'] or Library.Options;
 
 local RainbowStep = 0
 local Hue = 0
@@ -3676,6 +3676,7 @@ function Library:CreateWindow(...)
 	return Window;
 end;
 
+--// for easier gui testing if u edditing it ;)
 getgenv().LinoriaLib = setmetatable({}, Library)
 
 return Library
